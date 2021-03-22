@@ -1,9 +1,15 @@
 package eu.rowlinson.jonah.betterCodeEditor;
 
 public class Main {
+
+    private static GUI gui;
+
     public static void main(String args[]) {
-        GUI gui = new GUI();
-        gui.createGUI();
+        gui = new GUI();
         gui.getFrame().setVisible(true);
+    }
+
+    public static GUI getGui() {
+        return gui;
     }
 }
