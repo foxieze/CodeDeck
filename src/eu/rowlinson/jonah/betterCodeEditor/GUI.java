@@ -2,10 +2,31 @@ package eu.rowlinson.jonah.betterCodeEditor;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
+
 class GUI {
     private JFrame frame;
     private JTextArea ta;
     public int fontSize = 16;
+
+    final JFileChooser fc = new JFileChooser();
+
+    protected ImageIcon resizeIcon(ImageIcon icon, int w, int h) {
+        return new ImageIcon(icon.getImage().getScaledInstance(w, h, java.awt.Image.SCALE_SMOOTH));
+    }
+
+    protected ImageIcon createImageIcon(String path) {
+        java.net.URL imgURL = getClass().getResource(path);
+        if (imgURL != null) {
+            return resizeIcon(new ImageIcon(imgURL), 25, 25);
+        } else {
+            System.err.println("Couldn't find file: " + path);
+            return null;
+        }
+    }
 
     public GUI() {
         EventListener listener = new EventListener();
@@ -22,14 +43,36 @@ class GUI {
         menubar.add(filemenu);
 
         // Header
-        JPanel taskpane = new JPanel();
-        JButton fontUp = new JButton("Font Up");
+        // Font Buttons
+        JPanel taskpane = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        Icon plusIcon = createImageIcon("assets/add-icon.png");
+        Icon minusIcon = createImageIcon("assets/minus-icon.png");
+        JButton fontUp = new JButton(plusIcon);
         fontUp.addActionListener(listener);
-        JButton fontDown = new JButton("Font Down");
+        fontUp.setActionCommand("Font Up");
+        fontUp.setPreferredSize(new Dimension(30, 30));
+        JButton fontDown = new JButton(minusIcon);
+        fontDown.setActionCommand("Font Down");
+        fontDown.setPreferredSize(new Dimension(30, 30));
         fontDown.addActionListener(listener);
         taskpane.add(fontDown);
         taskpane.add(fontUp);
 
+        // Save Button
+        Icon saveIcon = createImageIcon("assets/save-icon.png");
+        JButton saveToolbarButton = new JButton(saveIcon);
+        saveToolbarButton.setPreferredSize(new Dimension(30,30));
+        saveToolbarButton.setActionCommand("Save Toolbar Button");
+        saveToolbarButton.addActionListener(listener);
+        taskpane.add(saveToolbarButton);
+
+        // Open Button
+        Icon openIcon = createImageIcon("assets/open-icon.png");
+        JButton openToolbarButton = new JButton(openIcon);
+        openToolbarButton.setPreferredSize(new Dimension(30,30));
+        openToolbarButton.setActionCommand("Open Toolbar Button");
+        openToolbarButton.addActionListener(listener);
+        taskpane.add(openToolbarButton);
 
         // Text Area at the Center
         this.ta = new JTextArea();
@@ -49,6 +92,39 @@ class GUI {
 
     public JTextArea getTextArea() {
         return this.ta;
+    }
+
+    public void saveFile() {
+        String textAreaText = getTextArea().getText();
+        int returnVal = fc.showSaveDialog(getFrame());
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            String file = fc.getSelectedFile().getAbsolutePath();
+            try {
+                FileWriter fw = new FileWriter(file);
+                fw.write(textAreaText);
+                fw.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void openFile() {
+        int returnVal = fc.showOpenDialog(getFrame());
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = fc.getSelectedFile();
+            try {
+                getTextArea().setText("");
+                Scanner fr = new Scanner(file);
+                while (fr.hasNextLine()) {
+                    String data = fr.nextLine();
+                    getTextArea().append(data + "\n");
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 
