@@ -138,6 +138,8 @@ class GUI {
             }
         }
     }
-
+    public void newFile() {
+        getTextArea().setText("");
+    }
 
 }

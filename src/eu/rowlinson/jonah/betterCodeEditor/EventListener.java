@@ -22,5 +22,8 @@ public class EventListener implements ActionListener {
         else if ((e.getActionCommand()).equals("Open Toolbar Button")) {
             getGui().openFile();
         }
+        else if ((e.getActionCommand()).equals("New Toolbar Button")) {
+            getGui().newFile();
+        }
     }
 }
