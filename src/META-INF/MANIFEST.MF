@@ -1,3 +1,3 @@
 Manifest-Version: 1.0
-Main-Class: eu.rowlinson.jonah.betterCodeEditor.Main
+Main-Class: eu.rowlinson.jonah.codeDeck.Main
 

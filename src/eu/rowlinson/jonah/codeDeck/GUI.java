@@ -1,4 +1,4 @@
-package eu.rowlinson.jonah.betterCodeEditor;
+package eu.rowlinson.jonah.codeDeck;
 
 import javax.swing.*;
 import java.awt.*;
