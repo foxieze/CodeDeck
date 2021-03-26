@@ -11,6 +11,7 @@ class GUI {
     private JFrame frame;
     private JTextArea ta;
     public int fontSize = 16;
+    private File openFile;
 
     final JFileChooser fc = new JFileChooser();
 
@@ -43,20 +44,15 @@ class GUI {
         menubar.add(filemenu);
 
         // Header
-        // Font Buttons
         JPanel taskpane = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        Icon plusIcon = createImageIcon("assets/add-icon.png");
-        Icon minusIcon = createImageIcon("assets/minus-icon.png");
-        JButton fontUp = new JButton(plusIcon);
-        fontUp.addActionListener(listener);
-        fontUp.setActionCommand("Font Up");
-        fontUp.setPreferredSize(new Dimension(30, 30));
-        JButton fontDown = new JButton(minusIcon);
-        fontDown.setActionCommand("Font Down");
-        fontDown.setPreferredSize(new Dimension(30, 30));
-        fontDown.addActionListener(listener);
-        taskpane.add(fontDown);
-        taskpane.add(fontUp);
+
+        // New Button
+        Icon newIcon = createImageIcon("assets/new-icon.png");
+        JButton newToolbarButton = new JButton(newIcon);
+        newToolbarButton.setPreferredSize(new Dimension(30,30));
+        newToolbarButton.addActionListener(listener);
+        newToolbarButton.setActionCommand("New Toolbar Button");
+        taskpane.add(newToolbarButton);
 
         // Save Button
         Icon saveIcon = createImageIcon("assets/save-icon.png");
@@ -74,6 +70,20 @@ class GUI {
         openToolbarButton.addActionListener(listener);
         taskpane.add(openToolbarButton);
 
+        // Font Button
+        Icon plusIcon = createImageIcon("assets/add-icon.png");
+        Icon minusIcon = createImageIcon("assets/minus-icon.png");
+        JButton fontUp = new JButton(plusIcon);
+        fontUp.addActionListener(listener);
+        fontUp.setActionCommand("Font Up");
+        fontUp.setPreferredSize(new Dimension(30, 30));
+        JButton fontDown = new JButton(minusIcon);
+        fontDown.setActionCommand("Font Down");
+        fontDown.setPreferredSize(new Dimension(30, 30));
+        fontDown.addActionListener(listener);
+        taskpane.add(fontDown);
+        taskpane.add(fontUp);
+
         // Text Area at the Center
         this.ta = new JTextArea();
         JScrollPane tascroll = new JScrollPane(ta, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -84,6 +94,8 @@ class GUI {
         frame.setJMenuBar(menubar);
         frame.getContentPane().add(BorderLayout.CENTER, ta);
         frame.getContentPane().add(BorderLayout.NORTH, taskpane);
+
+        this.ta.requestFocus();
     }
 
     public JFrame getFrame() {
