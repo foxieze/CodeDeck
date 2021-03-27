@@ -5,7 +5,7 @@ public class Main {
     private static GUI gui;
     private static BuildCommandsGUI BCGUI;
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         // FlatDarkLaf.install();
 
         EventListener listener = new EventListener();
