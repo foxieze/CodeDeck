@@ -1,5 +1,7 @@
 package eu.rowlinson.jonah.codeDeck;
 
+import com.formdev.flatlaf.FlatDarkLaf;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
@@ -12,6 +14,7 @@ class GUI {
     private JTextArea ta;
     public int fontSize = 16;
     private File openFile;
+    private String fileExtension;
 
     final JFileChooser fc = new JFileChooser();
 
@@ -29,8 +32,9 @@ class GUI {
         }
     }
 
-    public GUI() {
-        EventListener listener = new EventListener();
+    public GUI(EventListener listener) {
+
+        FlatDarkLaf.install();
 
         this.frame = new JFrame("CodeDeck");
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -40,8 +44,16 @@ class GUI {
         JMenuBar menubar = new JMenuBar();
         JMenu filemenu = new JMenu("File");
         JMenuItem savemenu = new JMenuItem("Save");
+        savemenu.setActionCommand("Save Menu");
+        savemenu.addActionListener(listener);
         filemenu.add(savemenu);
         menubar.add(filemenu);
+        JMenu projectmenu = new JMenu("Project");
+        JMenuItem bcmenuitem = new JMenuItem("Build / Run Commands");
+        bcmenuitem.addActionListener(listener);
+        bcmenuitem.setActionCommand("BC C Button");
+        projectmenu.add(bcmenuitem);
+        menubar.add(projectmenu);
 
         // Header
         JPanel taskpane = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -84,6 +96,14 @@ class GUI {
         taskpane.add(fontDown);
         taskpane.add(fontUp);
 
+        // Build - Run Button
+        Icon buildIcon = createImageIcon("assets/run-icon.png");
+        JButton buildButton = new JButton(buildIcon);
+        buildButton.setPreferredSize(new Dimension(30,30));
+        buildButton.addActionListener(listener);
+        buildButton.setActionCommand("BC Build Button");
+        taskpane.add(buildButton);
+
         // Text Area at the Center
         this.ta = new JTextArea();
         JScrollPane tascroll = new JScrollPane(ta, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -108,9 +128,21 @@ class GUI {
 
     public void saveFile() {
         String textAreaText = getTextArea().getText();
-        int returnVal = fc.showSaveDialog(getFrame());
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            String file = fc.getSelectedFile().getAbsolutePath();
+        if (openFile == null) {
+            int returnVal = fc.showSaveDialog(getFrame());
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                String file = fc.getSelectedFile().getAbsolutePath();
+                try {
+                    FileWriter fw = new FileWriter(file);
+                    fw.write(textAreaText);
+                    fw.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        else {
+            File file = openFile;
             try {
                 FileWriter fw = new FileWriter(file);
                 fw.write(textAreaText);
@@ -132,14 +164,22 @@ class GUI {
                     String data = fr.nextLine();
                     getTextArea().append(data + "\n");
                 }
+                openFile = file;
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
+
     public void newFile() {
         getTextArea().setText("");
+        openFile = null;
+    }
+
+    private void convertFileExtension() {
+        String path = openFile.getAbsolutePath();
+        fileExtension = path.substring(path.lastIndexOf('.') + 1);
     }
 
 }
