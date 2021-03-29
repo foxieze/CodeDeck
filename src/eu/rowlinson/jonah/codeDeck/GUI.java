@@ -8,25 +8,24 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
-import static eu.rowlinson.jonah.codeDeck.FileUtils.getFileExtension;
+
 
 class GUI {
-    private JFrame frame;
-    private JTextArea ta;
+    final JFrame frame;
+    final JTextArea ta;
     public int fontSize = 16;
     public File openFile;
-    private String fileExtension;
 
     final JFileChooser fc = new JFileChooser();
 
-    protected ImageIcon resizeIcon(ImageIcon icon, int w, int h) {
-        return new ImageIcon(icon.getImage().getScaledInstance(w, h, java.awt.Image.SCALE_SMOOTH));
+    protected ImageIcon resizeIcon(ImageIcon icon) {
+        return new ImageIcon(icon.getImage().getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH));
     }
 
     protected ImageIcon createImageIcon(String path) {
         java.net.URL imgURL = getClass().getResource(path);
         if (imgURL != null) {
-            return resizeIcon(new ImageIcon(imgURL), 25, 25);
+            return resizeIcon(new ImageIcon(imgURL));
         } else {
             System.err.println("Couldn't find file: " + path);
             return null;
@@ -138,7 +137,6 @@ class GUI {
                     FileWriter fw = new FileWriter(file);
                     fw.write(textAreaText);
                     fw.close();
-                    fileExtension = getFileExtension(fc.getSelectedFile());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

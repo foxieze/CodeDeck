@@ -3,18 +3,17 @@ package eu.rowlinson.jonah.codeDeck;
 import com.formdev.flatlaf.FlatDarkLaf;
 
 import javax.swing.*;
-import javax.swing.text.JTextComponent;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
 public class BuildCommandsGUI {
-    private JFrame frame;
+    final JFrame frame;
     public Map<String, String> executors = new HashMap<>();
 
     // Executioners
-    private JTextField pythonField;
-    private JTextField htmlField;
+    final JTextField pythonField;
+    final JTextField htmlField;
 
     public BuildCommandsGUI(EventListener listener) {
         FlatDarkLaf.install();

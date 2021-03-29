@@ -24,10 +24,7 @@ public class EventListener implements ActionListener {
             case "New Toolbar Button" -> getGui().newFile(); // New Button in Toolbar
             case "BC C Button" -> getBCGUI().getFrame().setVisible(true); // Build Commands menu button
             case "BC OK Button" -> getBCGUI().confirmCommands(); // Build Commands OK Button
-            case "Build Toolbar Button" -> {
-                buildRun(getGui().openFile);
-                // System.out.println("I think it did something!");
-            }  // Build Button in Toolbar
+            case "Build Toolbar Button" -> buildRun(getGui().openFile);
         }
     }
 }
