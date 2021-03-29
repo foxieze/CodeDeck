@@ -8,12 +8,13 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
+import static eu.rowlinson.jonah.codeDeck.FileUtils.getFileExtension;
 
 class GUI {
     private JFrame frame;
     private JTextArea ta;
     public int fontSize = 16;
-    private File openFile;
+    public File openFile;
     private String fileExtension;
 
     final JFileChooser fc = new JFileChooser();
@@ -101,13 +102,14 @@ class GUI {
         JButton buildButton = new JButton(buildIcon);
         buildButton.setPreferredSize(new Dimension(30,30));
         buildButton.addActionListener(listener);
-        buildButton.setActionCommand("BC Build Button");
+        buildButton.setActionCommand("Build Toolbar Button");
         taskpane.add(buildButton);
 
         // Text Area at the Center
         this.ta = new JTextArea();
         JScrollPane tascroll = new JScrollPane(ta, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         this.ta.setFont(new Font("Courier New", Font.PLAIN, fontSize));
+        this.ta.setTabSize(4);
         frame.add(tascroll);
 
         // Add all items to frame
@@ -136,10 +138,12 @@ class GUI {
                     FileWriter fw = new FileWriter(file);
                     fw.write(textAreaText);
                     fw.close();
+                    fileExtension = getFileExtension(fc.getSelectedFile());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
+
         }
         else {
             File file = openFile;
@@ -177,9 +181,6 @@ class GUI {
         openFile = null;
     }
 
-    private void convertFileExtension() {
-        String path = openFile.getAbsolutePath();
-        fileExtension = path.substring(path.lastIndexOf('.') + 1);
-    }
+
 
 }

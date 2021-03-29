@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class BuildCommandsGUI {
     private JFrame frame;
-    private Map<String, String> executors = new HashMap<>();
+    public Map<String, String> executors = new HashMap<>();
 
     // Executioners
     private JTextField pythonField;
