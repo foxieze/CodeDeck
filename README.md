@@ -20,4 +20,4 @@ For basic use, see below. For more advanced use, explained in more detail, check
 Contributions to the software are welcome! For major changes, please open an issue first to discuss what you would like to change.
 
 ## License
-[MIT License])(https://github.com/foxieze/CodeDeck/LICENSE.md)
+[MIT License](https://github.com/foxieze/CodeDeck/LICENSE.md)
