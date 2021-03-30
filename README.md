@@ -16,3 +16,8 @@ For basic use, see below. For more advanced use, explained in more detail, check
 3. Click on the Save Button (floppy disk icon or File > Save)
 4. Repeat!
 
+## Contributing
+Contributions to the software are welcome! For major changes, please open an issue first to discuss what you would like to change.
+
+## License
+[MIT License])(https://github.com/foxieze/CodeDeck/LICENSE.md)
